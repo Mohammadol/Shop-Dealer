@@ -12,7 +12,7 @@ const app = express();
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect("mongodb+srv://Mohammadol:Mohammad_161281@crm.qsaotj5.mongodb.net/node_tuts?retryWrites=true&w=majority&appName=CRM", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
