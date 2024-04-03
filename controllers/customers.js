@@ -1,9 +1,10 @@
 const Customer = require('../models/customer');
-
+const Order = require('../models/order');
 
 exports.getAllCustomers = async (req, res) => {
+  const id = req.params.id
   try {
-    const customers = await Customer.find();
+    const customers = await Customer.find({shopName:id});
     res.status(200).json(customers);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -53,12 +54,16 @@ exports.updateCustomer = async (req, res) => {
 
 exports.deleteCustomer = async (req, res) => {
   const id = req.params.id;
-
+  const ord = await Order.find({ customerId: id });
+  console.log(ord);
+  if(ord.length>0){return res.status(400).json({message:'Cannot delete customer with existing orders'})}
+  else{
   try {
     await Customer.findByIdAndDelete(id);
     res.status(200).json({ message: 'Customer deleted' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+}
 };
 

@@ -10,11 +10,11 @@ exports.getAllOrderItems = async (req, res) => {
 };
 
 
-exports.getOrderItemById = async (req, res) => {
+exports.getOrderItemByOrderId = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const orderItem = await OrderItem.findById(id);
+    const orderItem = await OrderItem.find({ orderId: id }).populate('orderId productId');
     if (!orderItem) {
       return res.status(404).json({ message: 'OrderItem not found' });
     }
@@ -26,7 +26,6 @@ exports.getOrderItemById = async (req, res) => {
 
 exports.createOrderItem = async (req, res) => {
   const newOrderItem = new OrderItem(req.body);
-
   try {
     const savedOrderItem = await newOrderItem.save();
     res.status(201).json(savedOrderItem);

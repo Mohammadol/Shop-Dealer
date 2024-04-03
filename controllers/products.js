@@ -1,8 +1,9 @@
 const Product = require('../models/Product');
 
 exports.getAllProducts = async (req, res) => {
+  const id=req.params.id;
   try {
-    const products = await Product.find();
+    const products = await Product.find({shopName:id});
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -11,7 +12,7 @@ exports.getAllProducts = async (req, res) => {
 
 exports.getProductById = async (req, res) => {
   const id = req.params.id;
-
+  
   try {
     const product = await Product.findById(id);
     if (!product) {

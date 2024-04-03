@@ -1,8 +1,10 @@
 const Order = require('../models/order');
 
 exports.getAllOrders = async (req, res) => {
+  const id=req.params.id;
   try {
-    const orders = await Order.find().populate('userId customerId'); // Populate related user and customer (if applicable)
+    const orders = await Order.find({shopName:id}).populate('customerId', 'name') // Fetch customer name
+    .populate('userId', 'username'); // Populate related user and customer (if applicable)
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -24,7 +26,6 @@ exports.getOrderById = async (req, res) => {
 
 exports.createOrder = async (req, res) => {
   const newOrder = new Order(req.body);
-
   try {
     const savedOrder = await newOrder.save();
     res.status(201).json(savedOrder);

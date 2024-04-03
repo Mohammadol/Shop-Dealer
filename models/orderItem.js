@@ -20,5 +20,6 @@ const orderItemSchema = new mongoose.Schema({
     required: true,
   },
 });
+orderItemSchema.index({orderId:1});
 
 module.exports = mongoose.model('OrderItem', orderItemSchema);

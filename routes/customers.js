@@ -3,7 +3,7 @@ const customerController = require('../controllers/customers');
 
 const router = express.Router();
 
-router.get('/', customerController.getAllCustomers);
+router.get('/:id', customerController.getAllCustomers);
 router.get('/:id', customerController.getCustomerById);
 router.post('/', customerController.createCustomer);
 router.put('/:id', customerController.updateCustomer);
